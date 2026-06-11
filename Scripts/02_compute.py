@@ -164,14 +164,14 @@ def compute_P(lulc, slope_pct):
     P    = np.ones_like(lulc, dtype=np.float32)
     veg  = np.isin(lulc, [10, 20, 30, 95])
     agri = np.isin(lulc, [40])
-    P = np.where(veg,                      0.8, P)
-    P = np.where(agri & (slope_pct <  2),  0.6, P)
-    P = np.where(agri & (slope_pct <  5),  0.5, P)
-    P = np.where(agri & (slope_pct <  8),  0.5, P)
-    P = np.where(agri & (slope_pct < 12),  0.6, P)
-    P = np.where(agri & (slope_pct < 16),  0.7, P)
-    P = np.where(agri & (slope_pct < 20),  0.8, P)
-    P = np.where(agri & (slope_pct >= 20), 0.9, P)
+    P = np.where(veg,                                           0.8, P)
+    P = np.where(agri & (slope_pct <   2),                     0.6, P)
+    P = np.where(agri & (slope_pct >=  2) & (slope_pct <  5), 0.5, P)
+    P = np.where(agri & (slope_pct >=  5) & (slope_pct <  8), 0.5, P)
+    P = np.where(agri & (slope_pct >=  8) & (slope_pct < 12), 0.6, P)
+    P = np.where(agri & (slope_pct >= 12) & (slope_pct < 16), 0.7, P)
+    P = np.where(agri & (slope_pct >= 16) & (slope_pct < 20), 0.8, P)
+    P = np.where(agri & (slope_pct >= 20),                     0.9, P)
     return P
 
 
