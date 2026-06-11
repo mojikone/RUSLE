@@ -237,7 +237,7 @@ def main():
     os.makedirs(DIRS['output_maps'], exist_ok=True)
     t0    = time.perf_counter()
     tasks = ['R', 'K', 'LS', 'C', 'P', 'SoilLoss', 'SoilLoss_Class']
-    nw    = max(1, min(len(tasks), (os.cpu_count() or 4) - 1))
+    nw    = min(len(tasks), os.cpu_count() or 4)
     print('=' * 58)
     print(f'  RUSLE — Step 3: Generate Maps  ({nw} processes)')
     print('=' * 58)

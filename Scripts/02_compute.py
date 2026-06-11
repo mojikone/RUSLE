@@ -56,7 +56,7 @@ from config import (
 )
 
 warnings.filterwarnings('ignore')
-N_WORKERS = max(1, (os.cpu_count() or 4) - 1)
+N_WORKERS = os.cpu_count() or 4
 
 
 # ── Fixed reference grids ─────────────────────────────────────────────────────
