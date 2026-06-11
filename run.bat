@@ -15,29 +15,16 @@ if "%1"=="02"    goto step02
 if "%1"=="03"    goto step03
 if "%1"=="all"   goto all
 
-REM ── No argument: auto-setup on first run, show usage otherwise ───────────
+REM ── No argument (double-click): setup if needed, then run all ────────────
 if not exist "%ROOT%.venv\Scripts\python.exe" (
-    echo  No virtual environment found -- running first-time setup ...
-    echo.
-    goto setup
+    echo == Setup: Creating virtual environment ====================
+    python -m venv "%ROOT%.venv"
+    if errorlevel 1 ( echo [ERROR] python not found -- install Python 3.10+ first & goto end )
+    "%ROOT%.venv\Scripts\python.exe" -m pip install -r "%ROOT%requirements.txt" --quiet
+    echo  Setup complete.
+    set "PY=%ROOT%.venv\Scripts\python.exe"
 )
-
-echo.
-echo  RUSLE Sediment Yield Pipeline
-echo  --------------------------------
-echo  Usage:  run.bat [setup ^| 01 ^| 02 ^| 03 ^| all]
-echo.
-echo    setup  Create .venv and install requirements.txt
-echo    01     Download all input data  (internet required)
-echo    02     Compute RUSLE factors + export CSV
-echo    03     Generate maps  (satellite basemap, masked to catchments)
-echo    all    Run steps 01 -> 02 -> 03 in sequence
-echo.
-echo  Quick start:
-echo    run.bat setup
-echo    run.bat all
-echo.
-goto end
+goto all
 
 :setup
 echo == Setup: Creating virtual environment ====================
