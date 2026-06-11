@@ -1,0 +1,25 @@
+# Downloaded / computed data (re-run scripts to reproduce)
+Data/DEM/
+Data/FlowAccum/
+Data/SoilGrids/
+Data/SM2RAIN/
+Data/Landsat8/
+Data/LULC/
+
+# Generated outputs
+Output/
+
+# Reference spreadsheet
+RUSLE_Results.xlsx
+
+# Python environment
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*.swp
