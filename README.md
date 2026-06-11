@@ -219,10 +219,85 @@ python -m venv .venv
 1. Replace `Data/SHP/Catchments.shp` with your catchment polygons
    (must have a `name` column)
 2. Open `Scripts/config.py` and update:
-   - `TARGET_CRS` if your area is in a different UTM zone
+   - `TARGET_CRS` if your area is in a different UTM zone (see table below)
    - `DATE_START / DATE_END` for a different Landsat year
    - `SDR`, `SEDIMENT_DENSITY`, `DAM_LIFE_CYCLE` as needed
 3. Run `run.bat all`
+
+---
+
+## UTM Zone Reference — `TARGET_CRS`
+
+All computations run in a projected metre-based CRS so that pixel areas,
+slope gradients, and catchment areas are accurate. UTM zones are the standard
+choice. Find your zone in the table and paste the EPSG code into `config.py`.
+
+### Middle East & Asia
+
+| Region | UTM Zone | EPSG |
+|--------|----------|------|
+| Arabian Peninsula West (Red Sea coast, Yemen) | 37N | `EPSG:32637` |
+| Arabian Peninsula Central (Riyadh, Mecca) | 38N | `EPSG:32638` |
+| Arabian Peninsula East (UAE west, Oman west) | 39N | `EPSG:32639` |
+| **Oman, UAE East, Iran South** ← *default* | **40N** | **`EPSG:32640`** |
+| Pakistan, Afghanistan, Iran East | 41N | `EPSG:32641` |
+| India West, Pakistan East | 42N | `EPSG:32642` |
+| India Central | 43N | `EPSG:32643` |
+| India East, Bangladesh | 44N | `EPSG:32644` |
+| Myanmar, Thailand | 47N | `EPSG:32647` |
+| Vietnam, Cambodia | 48N | `EPSG:32648` |
+
+### Africa
+
+| Region | UTM Zone | EPSG |
+|--------|----------|------|
+| Morocco, Western Sahara | 29N | `EPSG:32629` |
+| Algeria West, Mauritania | 30N | `EPSG:32630` |
+| Algeria East, Mali, Niger West | 31N | `EPSG:32631` |
+| Libya West, Niger East, Nigeria | 32N | `EPSG:32632` |
+| Libya East, Sudan, Chad | 33N | `EPSG:32633` |
+| Egypt, Sudan East | 36N | `EPSG:32636` |
+| Ethiopia, Kenya East | 37N | `EPSG:32637` |
+| Tanzania, Mozambique | 37S | `EPSG:32737` |
+| South Africa West | 34S | `EPSG:32734` |
+| South Africa East | 35S | `EPSG:32735` |
+
+### Europe
+
+| Region | UTM Zone | EPSG |
+|--------|----------|------|
+| Portugal, Spain West | 29N | `EPSG:32629` |
+| Spain East, UK West | 30N | `EPSG:32630` |
+| UK East, France, Central Europe | 31N | `EPSG:32631` |
+| Germany, Italy, Poland | 32N | `EPSG:32632` |
+| Balkans, Romania, Ukraine | 33N | `EPSG:32633` |
+| Finland, Baltic states | 34N | `EPSG:32634` |
+| Norway East | 35N | `EPSG:32635` |
+
+### Americas
+
+| Region | UTM Zone | EPSG |
+|--------|----------|------|
+| US Pacific coast (Los Angeles, Seattle) | 10N | `EPSG:32610` |
+| US West (Denver, Las Vegas) | 12N | `EPSG:32612` |
+| US Central (Chicago, Dallas) | 15N | `EPSG:32615` |
+| US East (New York, Miami) | 18N | `EPSG:32618` |
+| Colombia, Venezuela, Ecuador | 18N | `EPSG:32618` |
+| Peru, Bolivia | 19S | `EPSG:32719` |
+| Brazil East (São Paulo, Rio) | 23S | `EPSG:32723` |
+| Argentina Central | 20S | `EPSG:32720` |
+
+### How to find your zone
+
+If your area is not listed, use this formula:
+
+```
+Zone number  = floor((longitude + 180) / 6) + 1
+EPSG (North) = 32600 + zone number      (e.g. zone 36 → EPSG:32636)
+EPSG (South) = 32700 + zone number      (e.g. zone 36 → EPSG:32736)
+```
+
+Or look up your coordinates at [epsg.io](https://epsg.io) → search by location.
 
 ---
 
