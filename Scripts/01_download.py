@@ -124,6 +124,7 @@ def download_dem(bbox, out_dir):
 # ── 2. Flow accumulation via pysheds ─────────────────────────────────────────
 
 def compute_flowaccum(dem_path, out_dir):
+    os.makedirs(out_dir, exist_ok=True)
     out_path = os.path.join(out_dir, 'flowaccum_30m.tif')
     if os.path.exists(out_path):
         print('  [SKIP] Flow accumulation')
@@ -182,6 +183,7 @@ _MONTHS = ['jan','feb','mar','apr','may','jun',
 
 
 def download_sm2rain(bbox, out_dir):
+    os.makedirs(out_dir, exist_ok=True)
     west, south, east, north = bbox
     geom = [shapely_box(west, south, east, north).__geo_interface__]
     print('  Fetching SM2RAIN from Zenodo (COG bbox clips) ...')
@@ -208,6 +210,7 @@ def download_sm2rain(bbox, out_dir):
 # ── 5. Landsat 8 (Planetary Computer STAC) ───────────────────────────────────
 
 def download_landsat8(bbox, out_dir):
+    os.makedirs(out_dir, exist_ok=True)
     out_path = os.path.join(out_dir, 'landsat8_2017_B4B5.tif')
     if os.path.exists(out_path):
         print('  [SKIP] Landsat 8')
@@ -288,6 +291,7 @@ def _wc_url(lat3, lon3):
 
 
 def download_worldcover(bbox, out_dir):
+    os.makedirs(out_dir, exist_ok=True)
     out_path = os.path.join(out_dir, 'worldcover_2020.tif')
     if os.path.exists(out_path):
         print('  [SKIP] ESA WorldCover')
